@@ -1,35 +1,51 @@
-<form id="taskForm">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestor de Tareas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="form-group">
+    <h2>Mis Tareas</h2>
+
+    <label for="title">Título</label>
     <input type="text" id="title" placeholder="Título" required />
-    <textarea id="description" placeholder="Descripción" required></textarea>
-    <label for="dueDate">Fecha de vencimiento</label>
-    <input type="date" id="dueDate" required />
+
+    <label for="description">Descripción</label>
+    <textarea id="description" rows="3" placeholder="Descripción" required></textarea>
+
+    <div class="row">
+      <div class="column">
+        <label for="dueDate">Fecha de vencimiento</label>
+        <input type="date" id="dueDate" required />
+      </div>
+
+      <div class="column">
+        <label for="filter">Filtrar por estado:</label>
+        <select id="filter">
+          <option value="todas">Todas</option>
+          <option value="pendiente">Pendiente</option>
+          <option value="en-progreso">En Progreso</option>
+          <option value="completada">Completada</option>
+        </select>
+      </div>
+    </div>
+
     <label for="status">Estado</label>
     <select id="status">
-      <option value="Pendiente">Pendiente</option>
-      <option value="En proceso">En proceso</option>
-      <option value="Completada">Completada</option>
+      <option value="pendiente">Pendiente</option>
+      <option value="en-progreso">En Progreso</option>
+      <option value="completada">Completada</option>
     </select>
-    <button type="submit">Agregar Tarea</button>
-  </form>
-  
-  <div>
-    <label for="filterStatus">Filtrar por estado:</label>
-    <select id="filterStatus">
-      <option value="Todas">Todas</option>
-      <option value="Pendiente">Pendiente</option>
-      <option value="En proceso">En proceso</option>
-      <option value="Completada">Completada</option>
-    </select>
+
+    <button type="submit" id="addTask">Agregar Tarea</button>
   </div>
-  
-  <h3>Mis Tareas</h3>
-  <div id="taskList"></div>
-  
-  <script>
-    const user = JSON.parse(localStorage.getItem("activeUser"));
-    if (!user) {
-      alert("Debe iniciar sesión.");
-      window.location.href = "index.html";
-    }
-  </script>
-  
+
+  <!-- Aquí irán las tareas generadas dinámicamente -->
+  <div class="task-list" id="taskList"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

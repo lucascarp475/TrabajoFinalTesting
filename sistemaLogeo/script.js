@@ -80,13 +80,106 @@ function validatePassword(pwd) {
     });
   }
 
-  // Mostrar/ocultar contraseña
-  document.querySelectorAll('.toggle-password').forEach(button => {
-    button.addEventListener('click', () => {
-      const input = button.previousElementSibling;
-      const type = input.type === 'password' ? 'text' : 'password';
-      input.type = type;
-      button.textContent = type === 'password' ? '👁️' : '🙈';
-    });
-  });
+  document.addEventListener('DOMContentLoaded', () => {
+    const titleInput = document.getElementById('title');
+    const descriptionInput = document.getElementById('description');
+    const dueDateInput = document.getElementById('dueDate');
+    const statusInput = document.getElementById('status');
+    const filterInput = document.getElementById('filter');
+    const taskList = document.getElementById('taskList');
+    const addBtn = document.getElementById('addTask');
   
+    // Cargar tareas desde localStorage
+    let tareas = JSON.parse(localStorage.getItem('tareas')) || [];
+  
+    function guardarTareas() {
+      localStorage.setItem('tareas', JSON.stringify(tareas));
+    }
+  
+    function renderTareas(filtro = 'todas') {
+      taskList.innerHTML = '';
+  
+      const tareasFiltradas = filtro === 'todas'
+        ? tareas
+        : tareas.filter(t => t.estado === filtro);
+  
+      if (tareasFiltradas.length === 0) {
+        taskList.innerHTML = '<p>No hay tareas disponibles.</p>';
+        return;
+      }
+  
+      tareasFiltradas.forEach((tarea, index) => {
+        const div = document.createElement('div');
+        div.classList.add('task');
+        div.innerHTML = `
+          <h3>${tarea.titulo}</h3>
+          <p>${tarea.descripcion}</p>
+          <small>Vence: ${tarea.fecha}</small><br>
+          <small>Estado: ${tarea.estado}</small>
+          <div class="actions">
+            <button class="action delete" data-index="${index}">Eliminar</button>
+          </div>
+        `;
+        taskList.appendChild(div);
+      });
+    }
+  
+    // Agregar nueva tarea
+    addBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+  
+      const nuevaTarea = {
+        titulo: titleInput.value,
+        descripcion: descriptionInput.value,
+        fecha: dueDateInput.value,
+        estado: statusInput.value
+      };
+  
+      if (!nuevaTarea.titulo || !nuevaTarea.descripcion || !nuevaTarea.fecha) {
+        alert("Todos los campos son obligatorios.");
+        return;
+      }
+  
+      tareas.push(nuevaTarea);
+      guardarTareas();
+      renderTareas(filterInput.value);
+  
+      titleInput.value = '';
+      descriptionInput.value = '';
+      dueDateInput.value = '';
+      statusInput.value = 'pendiente';
+    });
+  
+    // Filtrar tareas por estado
+    filterInput.addEventListener('change', () => {
+      renderTareas(filterInput.value);
+    });
+  
+    // Eliminar tarea
+    taskList.addEventListener('click', (e) => {
+      if (e.target.classList.contains('delete')) {
+        const index = e.target.dataset.index;
+        tareas.splice(index, 1);
+        guardarTareas();
+        renderTareas(filterInput.value);
+      }
+    });
+  
+    // Mostrar tareas al cargar
+    renderTareas();
+  });  
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const iconEye = document.getElementById('iconEye');
+  
+    if (togglePassword && passwordInput && iconEye) {
+      togglePassword.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        iconEye.src = isPassword ? 'img/eye.svg' : 'img/hide.svg';
+        iconEye.alt = isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña';
+      });
+    }
+  });  
