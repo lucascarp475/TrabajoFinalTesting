@@ -58,25 +58,28 @@ function validatePassword(pwd) {
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
+
       const username = document.getElementById('username').value.trim();
       const pwd = document.getElementById('password').value;
-  
+
       if (!validatePassword(pwd)) {
         alert("Contraseña inválida.");
         return;
       }
-  
+
       const user = validateLogin(username, pwd);
       if (!user) {
         alert("Credenciales incorrectas.");
         return;
       }
-  
+
+      // Guardar sesión activa y redirigir al Task Manager
+      localStorage.setItem("activeUser", JSON.stringify(user));
       alert(`Bienvenido, ${user.username}`);
-      // Aquí podrías redirigir al Task Manager
+      window.location.href = "task-manager.html";
     });
   }
-  
+
   // Mostrar/ocultar contraseña
   document.querySelectorAll('.toggle-password').forEach(button => {
     button.addEventListener('click', () => {
@@ -87,6 +90,3 @@ function validatePassword(pwd) {
     });
   });
   
-  // En script.js, después de login exitoso:
-localStorage.setItem("activeUser", JSON.stringify(user));
-window.location.href = "task-manager.html";
