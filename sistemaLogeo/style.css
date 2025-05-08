@@ -72,6 +72,32 @@ button.action:hover {
 }
 
 /* Estilos para la lista de tareas */
+
+.task-header {
+  max-width: 600px;
+  margin: 2rem auto 1rem auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.task-header h2 {
+  margin: 0;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  font-weight: bold;
+}
+
+
 .task-list {
   max-width: 600px;
   margin: 2rem auto;

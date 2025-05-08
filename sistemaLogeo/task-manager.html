@@ -22,15 +22,6 @@
         <input type="date" id="dueDate" required />
       </div>
 
-      <div class="column">
-        <label for="filter">Filtrar por estado:</label>
-        <select id="filter">
-          <option value="todas">Todas</option>
-          <option value="pendiente">Pendiente</option>
-          <option value="en-progreso">En Progreso</option>
-          <option value="completada">Completada</option>
-        </select>
-      </div>
     </div>
 
     <label for="status">Estado</label>
@@ -43,9 +34,22 @@
     <button type="submit" id="addTask">Agregar Tarea</button>
   </div>
 
-  <!-- Aquí irán las tareas generadas dinámicamente -->
-  <div class="task-list" id="taskList"></div>
+  <!-- Contenedor de encabezado con título + filtro -->
+<div class="task-header">
+  <h2>Mis Tareas</h2>
+  <div class="filter-group">
+    <label for="filter">Filtrar:</label>
+    <select id="filter">
+      <option value="todas">Todas</option>
+      <option value="pendiente">Pendiente</option>
+      <option value="en-progreso">En Progreso</option>
+      <option value="completada">Completada</option>
+    </select>
+  </div>
+</div>
 
+<!-- Lista de tareas -->
+<div class="task-list" id="taskList"></div>
   <script src="script.js"></script>
 </body>
 </html>
