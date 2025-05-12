@@ -183,3 +183,18 @@ function validatePassword(pwd) {
       });
     }
   });  
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const togglePassword = document.getElementById('togglePasswordReg');
+    const passwordInput = document.getElementById('newPassword');
+    const iconEye = document.getElementById('iconEye');
+  
+    if (togglePassword && passwordInput && iconEye) {
+      togglePassword.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        iconEye.src = isPassword ? 'img/eye.svg' : 'img/hide.svg';
+        iconEye.alt = isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña';
+      });
+    }
+  });  
